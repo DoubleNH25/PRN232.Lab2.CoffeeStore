@@ -5,6 +5,10 @@ VisualStudioVersion = 17.12.35707.178 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN232.Lab2.CoffeeStore.API", "PRN232.Lab2.CoffeeStore.API\PRN232.Lab2.CoffeeStore.API.csproj", "{1EE7393E-8496-452A-982C-134002D297E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN232.Lab2.CoffeeStore.Services", "PRN232.Lab2.CoffeeStore.Services\PRN232.Lab2.CoffeeStore.Services.csproj", "{919C7E44-C302-4A5C-AAC2-AD59FBE41F06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN232.Lab2.CoffeeStore.Repositories", "PRN232.Lab2.CoffeeStore.Repositories\PRN232.Lab2.CoffeeStore.Repositories.csproj", "{E7FAC24B-D786-46F4-AA90-9DF3A48B0EA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{1EE7393E-8496-452A-982C-134002D297E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EE7393E-8496-452A-982C-134002D297E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EE7393E-8496-452A-982C-134002D297E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{919C7E44-C302-4A5C-AAC2-AD59FBE41F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{919C7E44-C302-4A5C-AAC2-AD59FBE41F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{919C7E44-C302-4A5C-AAC2-AD59FBE41F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{919C7E44-C302-4A5C-AAC2-AD59FBE41F06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7FAC24B-D786-46F4-AA90-9DF3A48B0EA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7FAC24B-D786-46F4-AA90-9DF3A48B0EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7FAC24B-D786-46F4-AA90-9DF3A48B0EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7FAC24B-D786-46F4-AA90-9DF3A48B0EA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
