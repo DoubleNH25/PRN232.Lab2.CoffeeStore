@@ -71,8 +71,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddControllers(options =>
     {
-        options.ReturnHttpNotAcceptable = true;
-        options.RespectBrowserAcceptHeader = true;
+        options.ReturnHttpNotAcceptable = false;
+        options.RespectBrowserAcceptHeader = false;
     })
     .AddJsonOptions(options =>
     {

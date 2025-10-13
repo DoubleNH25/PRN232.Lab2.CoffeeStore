@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PRN232.Lab2.CoffeeStore.Repositories.Entities;
 using PRN232.Lab2.CoffeeStore.Repositories.Interfaces;
 
 namespace PRN232.Lab2.CoffeeStore.Repositories.Repositories;
@@ -17,12 +18,19 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
     public IQueryable<TEntity> Query()
     {
-        return DbSet.AsQueryable();
+        IQueryable<TEntity> query = DbSet.AsQueryable();
+
+        if (typeof(BaseEntity).IsAssignableFrom(typeof(TEntity)))
+        {
+            query = query.Where(entity => !EF.Property<bool>(entity, nameof(BaseEntity.IsDeleted)));
+        }
+
+        return query;
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>>? predicate = null, params System.Linq.Expressions.Expression<Func<TEntity, object>>[] includes)
     {
-        IQueryable<TEntity> query = DbSet;
+        IQueryable<TEntity> query = Query();
 
         if (includes.Any())
         {
@@ -42,7 +50,14 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
     public async Task<TEntity?> GetByIdAsync(object id)
     {
-        return await DbSet.FindAsync(id);
+        var entity = await DbSet.FindAsync(id);
+
+        if (entity is BaseEntity baseEntity && baseEntity.IsDeleted)
+        {
+            return null;
+        }
+
+        return entity;
     }
 
     public async Task AddAsync(TEntity entity)
@@ -57,6 +72,14 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
     public void Remove(TEntity entity)
     {
+        if (entity is BaseEntity baseEntity)
+        {
+            baseEntity.IsDeleted = true;
+            baseEntity.UpdatedDate = DateTime.UtcNow;
+            DbSet.Update(entity);
+            return;
+        }
+
         DbSet.Remove(entity);
     }
 }

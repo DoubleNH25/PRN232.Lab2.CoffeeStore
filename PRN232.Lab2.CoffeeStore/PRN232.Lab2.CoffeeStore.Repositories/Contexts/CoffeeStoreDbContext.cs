@@ -33,6 +33,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
             entity.HasKey(e => e.CategoryId);
             entity.Property(e => e.Name).HasMaxLength(200).IsRequired();
             entity.Property(e => e.Description).HasMaxLength(500);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.HasQueryFilter(e => !e.IsDeleted);
         });
 
         builder.Entity<Product>(entity =>
@@ -46,6 +48,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
                 .WithMany(e => e.Products)
                 .HasForeignKey(e => e.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.HasQueryFilter(e => !e.IsDeleted);
         });
 
         builder.Entity<Order>(entity =>
@@ -57,6 +61,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
             entity.HasOne<Payment>(e => e.Payment)
                 .WithOne(e => e.Order)
                 .HasForeignKey<Payment>(e => e.OrderId);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.HasQueryFilter(e => !e.IsDeleted);
         });
 
         builder.Entity<OrderDetail>(entity =>
@@ -70,6 +76,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
             entity.HasOne(e => e.Product)
                 .WithMany(e => e.OrderDetails)
                 .HasForeignKey(e => e.ProductId);
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.HasQueryFilter(e => !e.IsDeleted);
         });
 
         builder.Entity<Payment>(entity =>
@@ -79,6 +87,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.Amount).HasColumnType("decimal(18,2)");
             entity.Property(e => e.PaymentDate).HasColumnType("datetime2");
             entity.Property(e => e.PaymentMethod).HasMaxLength(100).IsRequired();
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.HasQueryFilter(e => !e.IsDeleted);
         });
 
         builder.Entity<RefreshToken>(entity =>
@@ -89,12 +99,33 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.UserId).HasMaxLength(450).IsRequired();
             entity.Property(e => e.ExpiryDate).HasColumnType("datetime2");
             entity.HasIndex(e => e.Token).IsUnique();
+            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
+            entity.HasQueryFilter(e => !e.IsDeleted);
         });
 
         var adminUserId = "2AA19EFC-1797-4BE3-9A0B-54BFA4ABF722";
         var staffUserId = "C0A9F126-67E7-4B42-A85B-1B9D6685C3BD";
 
         var initialCreated = new DateTime(2024, 1, 1);
+
+        var adminRoleId = "A1F6E36D-38F5-4C7D-8A0A-4F6DDF70F9C5";
+        var staffRoleId = "F8C1E04F-4E55-4389-AE23-5AF74B4BEE73";
+
+        var adminRole = new IdentityRole
+        {
+            Id = adminRoleId,
+            Name = "Administrator",
+            NormalizedName = "ADMINISTRATOR"
+        };
+
+        var staffRole = new IdentityRole
+        {
+            Id = staffRoleId,
+            Name = "Staff",
+            NormalizedName = "STAFF"
+        };
+
+        builder.Entity<IdentityRole>().HasData(adminRole, staffRole);
 
         var adminUser = new ApplicationUser
         {
@@ -132,6 +163,20 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
 
         builder.Entity<ApplicationUser>().HasData(adminUser, staffUser);
 
+        var adminUserRole = new IdentityUserRole<string>
+        {
+            RoleId = adminRoleId,
+            UserId = adminUserId
+        };
+
+        var staffUserRole = new IdentityUserRole<string>
+        {
+            RoleId = staffRoleId,
+            UserId = staffUserId
+        };
+
+        builder.Entity<IdentityUserRole<string>>().HasData(adminUserRole, staffUserRole);
+
         var categories = new List<Category>();
         for (var i = 1; i <= 20; i++)
         {
@@ -141,7 +186,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
                 Name = $"Category {i}",
                 Description = $"Category {i} description",
                 CreatedDate = new DateTime(2024, 1, 1).AddDays(i),
-                UpdatedDate = null
+                UpdatedDate = null,
+                IsDeleted = false
             });
         }
         builder.Entity<Category>().HasData(categories);
@@ -161,7 +207,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
                     IsActive = true,
                     CategoryId = category.CategoryId,
                     CreatedDate = new DateTime(2024, 2, 1).AddDays(productId),
-                    UpdatedDate = null
+                    UpdatedDate = null,
+                    IsDeleted = false
                 });
                 productId++;
             }
@@ -185,7 +232,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
                 },
                 PaymentId = i,
                 CreatedDate = new DateTime(2024, 3, 1).AddDays(i),
-                UpdatedDate = null
+                UpdatedDate = null,
+                IsDeleted = false
             });
         }
         builder.Entity<Order>().HasData(orders);
@@ -201,7 +249,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
                 PaymentDate = new DateTime(2024, 3, 5).AddDays(i),
                 PaymentMethod = i % 2 == 0 ? "Credit Card" : "Cash",
                 CreatedDate = new DateTime(2024, 3, 5).AddDays(i),
-                UpdatedDate = null
+                UpdatedDate = null,
+                IsDeleted = false
             });
         }
         builder.Entity<Payment>().HasData(payments);
@@ -226,7 +275,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
                     Quantity = 1 + ((order.OrderId + i) % 3),
                     UnitPrice = details[i].Price,
                     CreatedDate = new DateTime(2024, 3, 10).AddDays(orderDetailId),
-                    UpdatedDate = null
+                    UpdatedDate = null,
+                    IsDeleted = false
                 });
                 orderDetailId++;
             }
@@ -244,7 +294,8 @@ public class CoffeeStoreDbContext : IdentityDbContext<ApplicationUser>
                 ExpiryDate = new DateTime(2024, 4, 1).AddDays(i),
                 IsRevoked = false,
                 CreatedDate = new DateTime(2024, 3, 15).AddDays(i),
-                UpdatedDate = null
+                UpdatedDate = null,
+                IsDeleted = false
             });
         }
         builder.Entity<RefreshToken>().HasData(refreshTokens);

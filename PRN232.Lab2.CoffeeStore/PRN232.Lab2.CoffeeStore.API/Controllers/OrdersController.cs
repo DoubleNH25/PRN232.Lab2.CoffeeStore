@@ -8,7 +8,7 @@ namespace PRN232.Lab2.CoffeeStore.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Administrator,Staff")]
 public class OrdersController : ControllerBase
 {
     private readonly IOrderService _orderService;

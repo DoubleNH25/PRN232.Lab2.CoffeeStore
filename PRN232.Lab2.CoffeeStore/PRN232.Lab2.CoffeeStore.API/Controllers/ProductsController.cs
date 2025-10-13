@@ -8,7 +8,7 @@ namespace PRN232.Lab2.CoffeeStore.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Administrator")]
 public class ProductsController : ControllerBase
 {
     private readonly IProductService _productService;
@@ -40,6 +40,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<ProductResponseModel>> CreateProduct([FromBody] ProductCreateRequestModel request)
     {
         var created = await _productService.CreateProductAsync(request);
@@ -47,6 +48,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<ProductResponseModel>> UpdateProduct(int id, [FromBody] ProductUpdateRequestModel request)
     {
         var updated = await _productService.UpdateProductAsync(id, request);
@@ -59,6 +61,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> DeleteProduct(int id)
     {
         var deleted = await _productService.DeleteProductAsync(id);

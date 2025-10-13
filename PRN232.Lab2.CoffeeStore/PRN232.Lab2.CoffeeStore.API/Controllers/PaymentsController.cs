@@ -8,7 +8,7 @@ namespace PRN232.Lab2.CoffeeStore.API.Controllers;
 
 [ApiController]
 [Route("api/orders/{orderId:int}/[controller]")]
-[Authorize]
+[Authorize(Roles = "Administrator,Staff")]
 public class PaymentsController : ControllerBase
 {
     private readonly IPaymentService _paymentService;
