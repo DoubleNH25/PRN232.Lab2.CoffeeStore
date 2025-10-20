@@ -1,16 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Admin\\Documents\\GitHub\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE7393E-8496-452A-982C-134002D297E2}|PRN232.Lab2.CoffeeStore.API\\PRN232.Lab2.CoffeeStore.API.csproj|c:\\users\\admin\\documents\\github\\prn232.lab2.coffeestore\\prn232.lab2.coffeestore\\prn232.lab2.coffeestore.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE7393E-8496-452A-982C-134002D297E2}|PRN232.Lab2.CoffeeStore.API\\PRN232.Lab2.CoffeeStore.API.csproj|solutionrelative:prn232.lab2.coffeestore.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E7FAC24B-D786-46F4-AA90-9DF3A48B0EA8}|PRN232.Lab2.CoffeeStore.Repositories\\PRN232.Lab2.CoffeeStore.Repositories.csproj|c:\\users\\admin\\documents\\github\\prn232.lab2.coffeestore\\prn232.lab2.coffeestore\\prn232.lab2.coffeestore.repositories\\contexts\\coffeestoredbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7FAC24B-D786-46F4-AA90-9DF3A48B0EA8}|PRN232.Lab2.CoffeeStore.Repositories\\PRN232.Lab2.CoffeeStore.Repositories.csproj|solutionrelative:prn232.lab2.coffeestore.repositories\\contexts\\coffeestoredbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -18,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 22,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -107,32 +98,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Documents\\GitHub\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore.API\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "PRN232.Lab2.CoffeeStore.API\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Documents\\GitHub\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore.API\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "PRN232.Lab2.CoffeeStore.API\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwCQAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T15:11:02.076Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CoffeeStoreDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Documents\\GitHub\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore.Repositories\\Contexts\\CoffeeStoreDbContext.cs",
-              "RelativeDocumentMoniker": "PRN232.Lab2.CoffeeStore.Repositories\\Contexts\\CoffeeStoreDbContext.cs",
-              "ToolTip": "C:\\Users\\Admin\\Documents\\GitHub\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore.Repositories\\Contexts\\CoffeeStoreDbContext.cs",
-              "RelativeToolTip": "PRN232.Lab2.CoffeeStore.Repositories\\Contexts\\CoffeeStoreDbContext.cs",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAAAKAAAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T14:57:51.272Z",
-              "EditorCaption": ""
             }
           ]
         }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PRN232.Lab2.CoffeeStore.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+879f69c050aa985ea2ff8f48fb86b7f4cfc1d9d9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49e748c1ab4f142914a3d1c453becb2d8c858c23")]
 [assembly: System.Reflection.AssemblyProductAttribute("PRN232.Lab2.CoffeeStore.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PRN232.Lab2.CoffeeStore.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

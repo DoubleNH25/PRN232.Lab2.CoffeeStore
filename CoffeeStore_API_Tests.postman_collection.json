@@ -28,6 +28,7 @@
 									"    pm.expect(response).to.have.property('Message');",
 									"    pm.expect(response).to.have.property('AccessToken');",
 									"    pm.expect(response).to.have.property('RefreshToken');",
+									"    pm.expect(response).to.have.property('AccessTokenExpiration');",
 									"});",
 									"",
 									"// Test successful registration",
@@ -92,6 +93,7 @@
 									"    pm.expect(response).to.have.property('Message');",
 									"    pm.expect(response).to.have.property('AccessToken');",
 									"    pm.expect(response).to.have.property('RefreshToken');",
+									"    pm.expect(response).to.have.property('AccessTokenExpiration');",
 									"});",
 									"",
 									"// Test successful login",
@@ -156,6 +158,7 @@
 									"    pm.expect(response).to.have.property('Message');",
 									"    pm.expect(response).to.have.property('AccessToken');",
 									"    pm.expect(response).to.have.property('RefreshToken');",
+									"    pm.expect(response).to.have.property('AccessTokenExpiration');",
 									"});",
 									"",
 									"// Test successful token refresh",
@@ -186,7 +189,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+							"raw": "{\n  \"accessToken\": \"{{accessToken}}\",\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -238,7 +241,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+							"raw": "{\n  \"accessToken\": \"{{accessToken}}\",\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -351,35 +354,35 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test paging values",
 									"pm.test(\"Page is 1\", function () {",
-									"    pm.expect(response.page).to.eql(1);",
+									"    pm.expect(response.Page).to.eql(1);",
 									"});",
 									"",
 									"pm.test(\"PageSize is 10\", function () {",
-									"    pm.expect(response.pageSize).to.eql(10);",
+									"    pm.expect(response.PageSize).to.eql(10);",
 									"});",
 									"",
 									"pm.test(\"Items array exists\", function () {",
-									"    pm.expect(response.items).to.be.an('array');",
+									"    pm.expect(response.Items).to.be.an('array');",
 									"});",
 									"",
 									"// Test that items count doesn't exceed pageSize",
 									"pm.test(\"Items count within page size\", function () {",
-									"    pm.expect(response.items.length).to.be.at.most(response.pageSize);",
+									"    pm.expect(response.Items.length).to.be.at.most(response.PageSize);",
 									"});",
 									"",
 									"// Test totalPages calculation",
 									"pm.test(\"TotalPages calculated correctly\", function () {",
-									"    const expectedTotalPages = Math.ceil(response.totalCount / response.pageSize);",
-									"    pm.expect(response.totalPages).to.eql(expectedTotalPages);",
+									"    const expectedTotalPages = Math.ceil(response.TotalCount / response.PageSize);",
+									"    pm.expect(response.TotalPages).to.eql(expectedTotalPages);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -429,19 +432,19 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test sorting (ascending by name)",
 									"pm.test(\"Products sorted ascending by name\", function () {",
-									"    if (response.items.length > 1) {",
-									"        for (let i = 0; i < response.items.length - 1; i++) {",
-									"            const currentName = response.items[i].name.toLowerCase();",
-									"            const nextName = response.items[i + 1].name.toLowerCase();",
+									"    if (response.Items.length > 1) {",
+									"        for (let i = 0; i < response.Items.length - 1; i++) {",
+									"            const currentName = response.Items[i].Name.toLowerCase();",
+									"            const nextName = response.Items[i + 1].Name.toLowerCase();",
 									"            pm.expect(currentName <= nextName).to.be.true;",
 									"        }",
 									"    }",
@@ -455,7 +458,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/products?sort=name&page=1&pageSize=10",
+							"raw": "{{baseUrl}}/api/products?sort=Name&page=1&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -466,7 +469,7 @@
 							"query": [
 								{
 									"key": "sort",
-									"value": "name"
+									"value": "Name"
 								},
 								{
 									"key": "page",
@@ -498,22 +501,22 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test search functionality",
 									"pm.test(\"Search returns relevant results\", function () {",
-									"    if (response.items.length > 0) {",
+									"    if (response.Items.length > 0) {",
 									"        // Check that at least one item contains search term",
 									"        const searchTerm = pm.request.url.query.toObject().search || '';",
 									"        if (searchTerm) {",
-									"            const hasMatch = response.items.some(item => ",
-									"                item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||",
-									"                (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()))",
+									"            const hasMatch = response.Items.some(item => ",
+									"                item.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||",
+									"                (item.Description && item.Description.toLowerCase().includes(searchTerm.toLowerCase()))",
 									"            );",
 									"            pm.expect(hasMatch).to.be.true;",
 									"        }",
@@ -571,18 +574,18 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test field selection",
 									"pm.test(\"Only selected fields returned\", function () {",
-									"    if (response.items.length > 0) {",
-									"        const selectedItem = response.items[0];",
-									"        const selectedFields = ['name', 'price'];",
+									"    if (response.Items.length > 0) {",
+									"        const selectedItem = response.Items[0];",
+									"        const selectedFields = ['Name', 'Price'];",
 									"        ",
 									"        // Check that only selected fields exist",
 									"        selectedFields.forEach(field => {",
@@ -590,7 +593,7 @@
 									"        });",
 									"        ",
 									"        // Check that unselected fields don't exist (if not essential)",
-									"        // Note: Some fields like productId might always be present",
+									"        // Note: Some fields like ProductId might always be present",
 									"    }",
 									"});"
 								],
@@ -602,7 +605,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/products?select=name,price&page=1&pageSize=10",
+							"raw": "{{baseUrl}}/api/products?select=Name,Price&page=1&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -613,7 +616,7 @@
 							"query": [
 								{
 									"key": "select",
-									"value": "name,price"
+									"value": "Name,Price"
 								},
 								{
 									"key": "page",
@@ -645,26 +648,28 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has product properties\", function () {",
-									"    pm.expect(response).to.have.property('productId');",
-									"    pm.expect(response).to.have.property('name');",
-									"    pm.expect(response).to.have.property('price');",
-									"    pm.expect(response).to.have.property('isActive');",
+									"    pm.expect(response).to.have.property('ProductId');",
+									"    pm.expect(response).to.have.property('Name');",
+									"    pm.expect(response).to.have.property('Price');",
+									"    pm.expect(response).to.have.property('IsActive');",
+									"    pm.expect(response).to.have.property('CategoryId');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Product has valid ID\", function () {",
-									"    pm.expect(response.productId).to.be.a('number');",
-									"    pm.expect(response.productId).to.be.above(0);",
+									"    pm.expect(response.ProductId).to.be.a('number');",
+									"    pm.expect(response.ProductId).to.be.above(0);",
 									"});",
 									"",
 									"pm.test(\"Product has valid name\", function () {",
-									"    pm.expect(response.name).to.be.a('string');",
-									"    pm.expect(response.name).to.have.lengthOf.at.least(1);",
+									"    pm.expect(response.Name).to.be.a('string');",
+									"    pm.expect(response.Name).to.have.lengthOf.at.least(1);",
 									"});",
 									"",
 									"pm.test(\"Product has valid price\", function () {",
-									"    pm.expect(response.price).to.be.a('number');",
-									"    pm.expect(response.price).to.be.above(0);",
+									"    pm.expect(response.Price).to.be.a('number');",
+									"    pm.expect(response.Price).to.be.above(0);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -738,23 +743,24 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has product properties\", function () {",
-									"    pm.expect(response).to.have.property('productId');",
-									"    pm.expect(response).to.have.property('name');",
-									"    pm.expect(response).to.have.property('price');",
-									"    pm.expect(response).to.have.property('isActive');",
-									"    pm.expect(response).to.have.property('categoryId');",
+									"    pm.expect(response).to.have.property('ProductId');",
+									"    pm.expect(response).to.have.property('Name');",
+									"    pm.expect(response).to.have.property('Price');",
+									"    pm.expect(response).to.have.property('IsActive');",
+									"    pm.expect(response).to.have.property('CategoryId');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Product created with correct values\", function () {",
 									"    const requestBody = JSON.parse(pm.request.body.raw);",
-									"    pm.expect(response.name).to.eql(requestBody.name);",
-									"    pm.expect(response.price).to.eql(requestBody.price);",
-									"    pm.expect(response.categoryId).to.eql(requestBody.categoryId);",
+									"    pm.expect(response.Name).to.eql(requestBody.Name);",
+									"    pm.expect(response.Price).to.eql(requestBody.Price);",
+									"    pm.expect(response.CategoryId).to.eql(requestBody.CategoryId);",
 									"});",
 									"",
 									"// Save product ID for later tests",
-									"pm.environment.set(\"productId\", response.productId);"
+									"pm.environment.set(\"productId\", response.ProductId);"
 								],
 								"type": "text/javascript"
 							}
@@ -771,7 +777,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Test Coffee {{$timestamp}}\",\n  \"description\": \"Test coffee product for API testing\",\n  \"price\": 12.99,\n  \"isActive\": true,\n  \"categoryId\": 1\n}",
+							"raw": "{\n  \"Name\": \"Test Coffee {{$timestamp}}\",\n  \"Description\": \"Test coffee product for API testing\",\n  \"Price\": 12.99,\n  \"IsActive\": true,\n  \"CategoryId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -812,7 +818,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Unauthorized Test Coffee\",\n  \"description\": \"Should fail without auth\",\n  \"price\": 9.99,\n  \"isActive\": true,\n  \"categoryId\": 1\n}",
+							"raw": "{\n  \"Name\": \"Unauthorized Test Coffee\",\n  \"Description\": \"Should fail without auth\",\n  \"Price\": 9.99,\n  \"IsActive\": true,\n  \"CategoryId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -859,7 +865,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"\",\n  \"description\": \"Invalid product with empty name\",\n  \"price\": -5.00,\n  \"isActive\": true,\n  \"categoryId\": 0\n}",
+							"raw": "{\n  \"Name\": \"\",\n  \"Description\": \"Invalid product with empty name\",\n  \"Price\": -5.00,\n  \"IsActive\": true,\n  \"CategoryId\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -896,17 +902,20 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has product properties\", function () {",
-									"    pm.expect(response).to.have.property('productId');",
-									"    pm.expect(response).to.have.property('name');",
-									"    pm.expect(response).to.have.property('price');",
-									"    pm.expect(response).to.have.property('isActive');",
+									"    pm.expect(response).to.have.property('ProductId');",
+									"    pm.expect(response).to.have.property('Name');",
+									"    pm.expect(response).to.have.property('Price');",
+									"    pm.expect(response).to.have.property('IsActive');",
+									"    pm.expect(response).to.have.property('CategoryId');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
+									"    pm.expect(response).to.have.property('UpdatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Product updated with correct values\", function () {",
 									"    const requestBody = JSON.parse(pm.request.body.raw);",
-									"    pm.expect(response.name).to.eql(requestBody.name);",
-									"    pm.expect(response.price).to.eql(requestBody.price);",
+									"    pm.expect(response.Name).to.eql(requestBody.Name);",
+									"    pm.expect(response.Price).to.eql(requestBody.Price);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -924,7 +933,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Updated Test Coffee\",\n  \"description\": \"Updated test coffee product\",\n  \"price\": 15.99,\n  \"isActive\": true,\n  \"categoryId\": 1\n}",
+							"raw": "{\n  \"Name\": \"Updated Test Coffee\",\n  \"Description\": \"Updated test coffee product\",\n  \"Price\": 15.99,\n  \"IsActive\": true,\n  \"CategoryId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -972,7 +981,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Non-existent Product\",\n  \"description\": \"Should not be found\",\n  \"price\": 9.99,\n  \"isActive\": true,\n  \"categoryId\": 1\n}",
+							"raw": "{\n  \"Name\": \"Non-existent Product\",\n  \"Description\": \"Should not be found\",\n  \"Price\": 9.99,\n  \"IsActive\": true,\n  \"CategoryId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1096,35 +1105,35 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test paging values",
 									"pm.test(\"Page is 1\", function () {",
-									"    pm.expect(response.page).to.eql(1);",
+									"    pm.expect(response.Page).to.eql(1);",
 									"});",
 									"",
 									"pm.test(\"PageSize is 10\", function () {",
-									"    pm.expect(response.pageSize).to.eql(10);",
+									"    pm.expect(response.PageSize).to.eql(10);",
 									"});",
 									"",
 									"pm.test(\"Items array exists\", function () {",
-									"    pm.expect(response.items).to.be.an('array');",
+									"    pm.expect(response.Items).to.be.an('array');",
 									"});",
 									"",
 									"// Test that items count doesn't exceed pageSize",
 									"pm.test(\"Items count within page size\", function () {",
-									"    pm.expect(response.items.length).to.be.at.most(response.pageSize);",
+									"    pm.expect(response.Items.length).to.be.at.most(response.PageSize);",
 									"});",
 									"",
 									"// Test totalPages calculation",
 									"pm.test(\"TotalPages calculated correctly\", function () {",
-									"    const expectedTotalPages = Math.ceil(response.totalCount / response.pageSize);",
-									"    pm.expect(response.totalPages).to.eql(expectedTotalPages);",
+									"    const expectedTotalPages = Math.ceil(response.TotalCount / response.PageSize);",
+									"    pm.expect(response.TotalPages).to.eql(expectedTotalPages);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1174,19 +1183,19 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test sorting (descending by name)",
 									"pm.test(\"Categories sorted descending by name\", function () {",
-									"    if (response.items.length > 1) {",
-									"        for (let i = 0; i < response.items.length - 1; i++) {",
-									"            const currentName = response.items[i].name.toLowerCase();",
-									"            const nextName = response.items[i + 1].name.toLowerCase();",
+									"    if (response.Items.length > 1) {",
+									"        for (let i = 0; i < response.Items.length - 1; i++) {",
+									"            const currentName = response.Items[i].Name.toLowerCase();",
+									"            const nextName = response.Items[i + 1].Name.toLowerCase();",
 									"            pm.expect(currentName >= nextName).to.be.true;",
 									"        }",
 									"    }",
@@ -1200,7 +1209,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/categories?sort=-name&page=1&pageSize=10",
+							"raw": "{{baseUrl}}/api/categories?sort=-Name&page=1&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1211,7 +1220,7 @@
 							"query": [
 								{
 									"key": "sort",
-									"value": "-name"
+									"value": "-Name"
 								},
 								{
 									"key": "page",
@@ -1243,22 +1252,22 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test search functionality",
 									"pm.test(\"Search returns relevant results\", function () {",
-									"    if (response.items.length > 0) {",
+									"    if (response.Items.length > 0) {",
 									"        // Check that at least one item contains search term",
 									"        const searchTerm = pm.request.url.query.toObject().search || '';",
 									"        if (searchTerm) {",
-									"            const hasMatch = response.items.some(item => ",
-									"                item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||",
-									"                (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()))",
+									"            const hasMatch = response.Items.some(item => ",
+									"                item.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||",
+									"                (item.Description && item.Description.toLowerCase().includes(searchTerm.toLowerCase()))",
 									"            );",
 									"            pm.expect(hasMatch).to.be.true;",
 									"        }",
@@ -1316,18 +1325,18 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test field selection",
 									"pm.test(\"Only selected fields returned\", function () {",
-									"    if (response.items.length > 0) {",
-									"        const selectedItem = response.items[0];",
-									"        const selectedFields = ['name'];",
+									"    if (response.Items.length > 0) {",
+									"        const selectedItem = response.Items[0];",
+									"        const selectedFields = ['Name'];",
 									"        ",
 									"        // Check that only selected fields exist",
 									"        selectedFields.forEach(field => {",
@@ -1344,7 +1353,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/categories?select=name&page=1&pageSize=10",
+							"raw": "{{baseUrl}}/api/categories?select=Name&page=1&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1355,7 +1364,7 @@
 							"query": [
 								{
 									"key": "select",
-									"value": "name"
+									"value": "Name"
 								},
 								{
 									"key": "page",
@@ -1387,19 +1396,20 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has category properties\", function () {",
-									"    pm.expect(response).to.have.property('categoryId');",
-									"    pm.expect(response).to.have.property('name');",
+									"    pm.expect(response).to.have.property('CategoryId');",
+									"    pm.expect(response).to.have.property('Name');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Category has valid ID\", function () {",
-									"    pm.expect(response.categoryId).to.be.a('number');",
-									"    pm.expect(response.categoryId).to.be.above(0);",
+									"    pm.expect(response.CategoryId).to.be.a('number');",
+									"    pm.expect(response.CategoryId).to.be.above(0);",
 									"});",
 									"",
 									"pm.test(\"Category has valid name\", function () {",
-									"    pm.expect(response.name).to.be.a('string');",
-									"    pm.expect(response.name).to.have.lengthOf.at.least(1);",
+									"    pm.expect(response.Name).to.be.a('string');",
+									"    pm.expect(response.Name).to.have.lengthOf.at.least(1);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1473,18 +1483,19 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has category properties\", function () {",
-									"    pm.expect(response).to.have.property('categoryId');",
-									"    pm.expect(response).to.have.property('name');",
+									"    pm.expect(response).to.have.property('CategoryId');",
+									"    pm.expect(response).to.have.property('Name');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Category created with correct values\", function () {",
 									"    const requestBody = JSON.parse(pm.request.body.raw);",
-									"    pm.expect(response.name).to.eql(requestBody.name);",
+									"    pm.expect(response.Name).to.eql(requestBody.Name);",
 									"});",
 									"",
 									"// Save category ID for later tests",
-									"pm.environment.set(\"categoryId\", response.categoryId);"
+									"pm.environment.set(\"categoryId\", response.CategoryId);"
 								],
 								"type": "text/javascript"
 							}
@@ -1501,7 +1512,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Test Category {{$timestamp}}\",\n  \"description\": \"Test category for API testing\"\n}",
+							"raw": "{\n  \"Name\": \"Test Category {{$timestamp}}\",\n  \"Description\": \"Test category for API testing\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1542,7 +1553,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Unauthorized Test Category\",\n  \"description\": \"Should fail without auth\"\n}",
+							"raw": "{\n  \"Name\": \"Unauthorized Test Category\",\n  \"Description\": \"Should fail without auth\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1589,7 +1600,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"\",\n  \"description\": \"Invalid category with empty name\"\n}",
+							"raw": "{\n  \"Name\": \"\",\n  \"Description\": \"Invalid category with empty name\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1626,14 +1637,16 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has category properties\", function () {",
-									"    pm.expect(response).to.have.property('categoryId');",
-									"    pm.expect(response).to.have.property('name');",
+									"    pm.expect(response).to.have.property('CategoryId');",
+									"    pm.expect(response).to.have.property('Name');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
+									"    pm.expect(response).to.have.property('UpdatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Category updated with correct values\", function () {",
 									"    const requestBody = JSON.parse(pm.request.body.raw);",
-									"    pm.expect(response.name).to.eql(requestBody.name);",
+									"    pm.expect(response.Name).to.eql(requestBody.Name);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1651,7 +1664,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Updated Test Category\",\n  \"description\": \"Updated test category\"\n}",
+							"raw": "{\n  \"Name\": \"Updated Test Category\",\n  \"Description\": \"Updated test category\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1699,7 +1712,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Non-existent Category\",\n  \"description\": \"Should not be found\"\n}",
+							"raw": "{\n  \"Name\": \"Non-existent Category\",\n  \"Description\": \"Should not be found\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1823,35 +1836,35 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test paging values",
 									"pm.test(\"Page is 1\", function () {",
-									"    pm.expect(response.page).to.eql(1);",
+									"    pm.expect(response.Page).to.eql(1);",
 									"});",
 									"",
 									"pm.test(\"PageSize is 10\", function () {",
-									"    pm.expect(response.pageSize).to.eql(10);",
+									"    pm.expect(response.PageSize).to.eql(10);",
 									"});",
 									"",
 									"pm.test(\"Items array exists\", function () {",
-									"    pm.expect(response.items).to.be.an('array');",
+									"    pm.expect(response.Items).to.be.an('array');",
 									"});",
 									"",
 									"// Test that items count doesn't exceed pageSize",
 									"pm.test(\"Items count within page size\", function () {",
-									"    pm.expect(response.items.length).to.be.at.most(response.pageSize);",
+									"    pm.expect(response.Items.length).to.be.at.most(response.PageSize);",
 									"});",
 									"",
 									"// Test totalPages calculation",
 									"pm.test(\"TotalPages calculated correctly\", function () {",
-									"    const expectedTotalPages = Math.ceil(response.totalCount / response.pageSize);",
-									"    pm.expect(response.totalPages).to.eql(expectedTotalPages);",
+									"    const expectedTotalPages = Math.ceil(response.TotalCount / response.PageSize);",
+									"    pm.expect(response.TotalPages).to.eql(expectedTotalPages);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1907,19 +1920,19 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test sorting (ascending by order date)",
 									"pm.test(\"Orders sorted ascending by order date\", function () {",
-									"    if (response.items.length > 1) {",
-									"        for (let i = 0; i < response.items.length - 1; i++) {",
-									"            const currentDate = new Date(response.items[i].orderDate);",
-									"            const nextDate = new Date(response.items[i + 1].orderDate);",
+									"    if (response.Items.length > 1) {",
+									"        for (let i = 0; i < response.Items.length - 1; i++) {",
+									"            const currentDate = new Date(response.Items[i].OrderDate);",
+									"            const nextDate = new Date(response.Items[i + 1].OrderDate);",
 									"            pm.expect(currentDate <= nextDate).to.be.true;",
 									"        }",
 									"    }",
@@ -1939,7 +1952,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/orders?sort=orderDate&page=1&pageSize=10",
+							"raw": "{{baseUrl}}/api/orders?sort=OrderDate&page=1&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1950,7 +1963,7 @@
 							"query": [
 								{
 									"key": "sort",
-									"value": "orderDate"
+									"value": "OrderDate"
 								},
 								{
 									"key": "page",
@@ -1982,21 +1995,21 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test search functionality",
 									"pm.test(\"Search returns relevant results\", function () {",
-									"    if (response.items.length > 0) {",
+									"    if (response.Items.length > 0) {",
 									"        // Check that at least one item contains search term",
 									"        const searchTerm = pm.request.url.query.toObject().search || '';",
 									"        if (searchTerm) {",
-									"            const hasMatch = response.items.some(item => ",
-									"                item.status.toLowerCase().includes(searchTerm.toLowerCase())",
+									"            const hasMatch = response.Items.some(item => ",
+									"                item.Status.toLowerCase().includes(searchTerm.toLowerCase())",
 									"            );",
 									"            pm.expect(hasMatch).to.be.true;",
 									"        }",
@@ -2060,18 +2073,18 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test field selection",
 									"pm.test(\"Only selected fields returned\", function () {",
-									"    if (response.items.length > 0) {",
-									"        const selectedItem = response.items[0];",
-									"        const selectedFields = ['orderId', 'status'];",
+									"    if (response.Items.length > 0) {",
+									"        const selectedItem = response.Items[0];",
+									"        const selectedFields = ['OrderId', 'Status'];",
 									"        ",
 									"        // Check that only selected fields exist",
 									"        selectedFields.forEach(field => {",
@@ -2094,7 +2107,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/orders?select=orderId,status&page=1&pageSize=10",
+							"raw": "{{baseUrl}}/api/orders?select=OrderId,Status&page=1&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -2105,7 +2118,7 @@
 							"query": [
 								{
 									"key": "select",
-									"value": "orderId,status"
+									"value": "OrderId,Status"
 								},
 								{
 									"key": "page",
@@ -2137,21 +2150,22 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has order properties\", function () {",
-									"    pm.expect(response).to.have.property('orderId');",
-									"    pm.expect(response).to.have.property('userId');",
-									"    pm.expect(response).to.have.property('orderDate');",
-									"    pm.expect(response).to.have.property('status');",
+									"    pm.expect(response).to.have.property('OrderId');",
+									"    pm.expect(response).to.have.property('UserId');",
+									"    pm.expect(response).to.have.property('OrderDate');",
+									"    pm.expect(response).to.have.property('Status');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Order has valid ID\", function () {",
-									"    pm.expect(response.orderId).to.be.a('number');",
-									"    pm.expect(response.orderId).to.be.above(0);",
+									"    pm.expect(response.OrderId).to.be.a('number');",
+									"    pm.expect(response.OrderId).to.be.above(0);",
 									"});",
 									"",
 									"pm.test(\"Order has valid user ID\", function () {",
-									"    pm.expect(response.userId).to.be.a('string');",
-									"    pm.expect(response.userId).to.have.lengthOf.at.least(1);",
+									"    pm.expect(response.UserId).to.be.a('string');",
+									"    pm.expect(response.UserId).to.have.lengthOf.at.least(1);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2237,21 +2251,22 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has order properties\", function () {",
-									"    pm.expect(response).to.have.property('orderId');",
-									"    pm.expect(response).to.have.property('userId');",
-									"    pm.expect(response).to.have.property('orderDate');",
-									"    pm.expect(response).to.have.property('status');",
+									"    pm.expect(response).to.have.property('OrderId');",
+									"    pm.expect(response).to.have.property('UserId');",
+									"    pm.expect(response).to.have.property('OrderDate');",
+									"    pm.expect(response).to.have.property('Status');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Order created with correct values\", function () {",
 									"    const requestBody = JSON.parse(pm.request.body.raw);",
-									"    pm.expect(response.userId).to.eql(requestBody.userId);",
-									"    pm.expect(response.status).to.eql(requestBody.status);",
+									"    pm.expect(response.UserId).to.eql(requestBody.UserId);",
+									"    pm.expect(response.Status).to.eql(requestBody.Status);",
 									"});",
 									"",
 									"// Save order ID for later tests",
-									"pm.environment.set(\"orderId\", response.orderId);"
+									"pm.environment.set(\"orderId\", response.OrderId);"
 								],
 								"type": "text/javascript"
 							}
@@ -2268,7 +2283,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"orderDate\": \"{{$isoTimestamp}}\",\n  \"status\": \"pending\",\n  \"details\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2,\n      \"unitPrice\": 12.99\n    }\n  ]\n}",
+							"raw": "{\n  \"UserId\": \"{{userId}}\",\n  \"OrderDate\": \"{{$isoTimestamp}}\",\n  \"Status\": \"pending\",\n  \"Details\": [\n    {\n      \"ProductId\": 1,\n      \"Quantity\": 2,\n      \"UnitPrice\": 12.99\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2309,7 +2324,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"orderDate\": \"{{$isoTimestamp}}\",\n  \"status\": \"pending\",\n  \"details\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2,\n      \"unitPrice\": 12.99\n    }\n  ]\n}",
+							"raw": "{\n  \"UserId\": \"{{userId}}\",\n  \"OrderDate\": \"{{$isoTimestamp}}\",\n  \"Status\": \"pending\",\n  \"Details\": [\n    {\n      \"ProductId\": 1,\n      \"Quantity\": 2,\n      \"UnitPrice\": 12.99\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2356,7 +2371,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": \"\",\n  \"orderDate\": \"invalid-date\",\n  \"status\": \"\",\n  \"details\": []\n}",
+							"raw": "{\n  \"UserId\": \"\",\n  \"OrderDate\": \"invalid-date\",\n  \"Status\": \"\",\n  \"Details\": []\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2393,16 +2408,18 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has order properties\", function () {",
-									"    pm.expect(response).to.have.property('orderId');",
-									"    pm.expect(response).to.have.property('userId');",
-									"    pm.expect(response).to.have.property('orderDate');",
-									"    pm.expect(response).to.have.property('status');",
+									"    pm.expect(response).to.have.property('OrderId');",
+									"    pm.expect(response).to.have.property('UserId');",
+									"    pm.expect(response).to.have.property('OrderDate');",
+									"    pm.expect(response).to.have.property('Status');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
+									"    pm.expect(response).to.have.property('UpdatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Order updated with correct values\", function () {",
 									"    const requestBody = JSON.parse(pm.request.body.raw);",
-									"    pm.expect(response.status).to.eql(requestBody.status);",
+									"    pm.expect(response.Status).to.eql(requestBody.Status);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2420,7 +2437,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"orderDate\": \"{{$isoTimestamp}}\",\n  \"status\": \"completed\"\n}",
+							"raw": "{\n  \"UserId\": \"{{userId}}\",\n  \"OrderDate\": \"{{$isoTimestamp}}\",\n  \"Status\": \"completed\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2468,7 +2485,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"orderDate\": \"{{$isoTimestamp}}\",\n  \"status\": \"cancelled\"\n}",
+							"raw": "{\n  \"UserId\": \"{{userId}}\",\n  \"OrderDate\": \"{{$isoTimestamp}}\",\n  \"Status\": \"cancelled\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2592,35 +2609,35 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test paging values",
 									"pm.test(\"Page is 1\", function () {",
-									"    pm.expect(response.page).to.eql(1);",
+									"    pm.expect(response.Page).to.eql(1);",
 									"});",
 									"",
 									"pm.test(\"PageSize is 10\", function () {",
-									"    pm.expect(response.pageSize).to.eql(10);",
+									"    pm.expect(response.PageSize).to.eql(10);",
 									"});",
 									"",
 									"pm.test(\"Items array exists\", function () {",
-									"    pm.expect(response.items).to.be.an('array');",
+									"    pm.expect(response.Items).to.be.an('array');",
 									"});",
 									"",
 									"// Test that items count doesn't exceed pageSize",
 									"pm.test(\"Items count within page size\", function () {",
-									"    pm.expect(response.items.length).to.be.at.most(response.pageSize);",
+									"    pm.expect(response.Items.length).to.be.at.most(response.PageSize);",
 									"});",
 									"",
 									"// Test totalPages calculation",
 									"pm.test(\"TotalPages calculated correctly\", function () {",
-									"    const expectedTotalPages = Math.ceil(response.totalCount / response.pageSize);",
-									"    pm.expect(response.totalPages).to.eql(expectedTotalPages);",
+									"    const expectedTotalPages = Math.ceil(response.TotalCount / response.PageSize);",
+									"    pm.expect(response.TotalPages).to.eql(expectedTotalPages);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2678,19 +2695,19 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test sorting (descending by payment date)",
 									"pm.test(\"Payments sorted descending by payment date\", function () {",
-									"    if (response.items.length > 1) {",
-									"        for (let i = 0; i < response.items.length - 1; i++) {",
-									"            const currentDate = new Date(response.items[i].paymentDate);",
-									"            const nextDate = new Date(response.items[i + 1].paymentDate);",
+									"    if (response.Items.length > 1) {",
+									"        for (let i = 0; i < response.Items.length - 1; i++) {",
+									"            const currentDate = new Date(response.Items[i].PaymentDate);",
+									"            const nextDate = new Date(response.Items[i + 1].PaymentDate);",
 									"            pm.expect(currentDate >= nextDate).to.be.true;",
 									"        }",
 									"    }",
@@ -2710,7 +2727,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/orders/1/payments?sort=-paymentDate&page=1&pageSize=10",
+							"raw": "{{baseUrl}}/api/orders/1/payments?sort=-PaymentDate&page=1&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -2723,7 +2740,7 @@
 							"query": [
 								{
 									"key": "sort",
-									"value": "-paymentDate"
+									"value": "-PaymentDate"
 								},
 								{
 									"key": "page",
@@ -2755,21 +2772,21 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test search functionality",
 									"pm.test(\"Search returns relevant results\", function () {",
-									"    if (response.items.length > 0) {",
+									"    if (response.Items.length > 0) {",
 									"        // Check that at least one item contains search term",
 									"        const searchTerm = pm.request.url.query.toObject().search || '';",
 									"        if (searchTerm) {",
-									"            const hasMatch = response.items.some(item => ",
-									"                item.paymentMethod.toLowerCase().includes(searchTerm.toLowerCase())",
+									"            const hasMatch = response.Items.some(item => ",
+									"                item.PaymentMethod.toLowerCase().includes(searchTerm.toLowerCase())",
 									"            );",
 									"            pm.expect(hasMatch).to.be.true;",
 									"        }",
@@ -2835,18 +2852,18 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test field selection",
 									"pm.test(\"Only selected fields returned\", function () {",
-									"    if (response.items.length > 0) {",
-									"        const selectedItem = response.items[0];",
-									"        const selectedFields = ['paymentId', 'amount'];",
+									"    if (response.Items.length > 0) {",
+									"        const selectedItem = response.Items[0];",
+									"        const selectedFields = ['PaymentId', 'Amount'];",
 									"        ",
 									"        // Check that only selected fields exist",
 									"        selectedFields.forEach(field => {",
@@ -2869,7 +2886,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/orders/1/payments?select=paymentId,amount&page=1&pageSize=10",
+							"raw": "{{baseUrl}}/api/orders/1/payments?select=PaymentId,Amount&page=1&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -2882,7 +2899,7 @@
 							"query": [
 								{
 									"key": "select",
-									"value": "paymentId,amount"
+									"value": "PaymentId,Amount"
 								},
 								{
 									"key": "page",
@@ -2914,22 +2931,23 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has payment properties\", function () {",
-									"    pm.expect(response).to.have.property('paymentId');",
-									"    pm.expect(response).to.have.property('orderId');",
-									"    pm.expect(response).to.have.property('amount');",
-									"    pm.expect(response).to.have.property('paymentDate');",
-									"    pm.expect(response).to.have.property('paymentMethod');",
+									"    pm.expect(response).to.have.property('PaymentId');",
+									"    pm.expect(response).to.have.property('OrderId');",
+									"    pm.expect(response).to.have.property('Amount');",
+									"    pm.expect(response).to.have.property('PaymentDate');",
+									"    pm.expect(response).to.have.property('PaymentMethod');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Payment has valid ID\", function () {",
-									"    pm.expect(response.paymentId).to.be.a('number');",
-									"    pm.expect(response.paymentId).to.be.above(0);",
+									"    pm.expect(response.PaymentId).to.be.a('number');",
+									"    pm.expect(response.PaymentId).to.be.above(0);",
 									"});",
 									"",
 									"pm.test(\"Payment has valid amount\", function () {",
-									"    pm.expect(response.amount).to.be.a('number');",
-									"    pm.expect(response.amount).to.be.above(0);",
+									"    pm.expect(response.Amount).to.be.a('number');",
+									"    pm.expect(response.Amount).to.be.above(0);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3019,22 +3037,23 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has payment properties\", function () {",
-									"    pm.expect(response).to.have.property('paymentId');",
-									"    pm.expect(response).to.have.property('orderId');",
-									"    pm.expect(response).to.have.property('amount');",
-									"    pm.expect(response).to.have.property('paymentDate');",
-									"    pm.expect(response).to.have.property('paymentMethod');",
+									"    pm.expect(response).to.have.property('PaymentId');",
+									"    pm.expect(response).to.have.property('OrderId');",
+									"    pm.expect(response).to.have.property('Amount');",
+									"    pm.expect(response).to.have.property('PaymentDate');",
+									"    pm.expect(response).to.have.property('PaymentMethod');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Payment created with correct values\", function () {",
 									"    const requestBody = JSON.parse(pm.request.body.raw);",
-									"    pm.expect(response.amount).to.eql(requestBody.amount);",
-									"    pm.expect(response.paymentMethod).to.eql(requestBody.paymentMethod);",
+									"    pm.expect(response.Amount).to.eql(requestBody.Amount);",
+									"    pm.expect(response.PaymentMethod).to.eql(requestBody.PaymentMethod);",
 									"});",
 									"",
 									"// Save payment ID for later tests",
-									"pm.environment.set(\"paymentId\", response.paymentId);"
+									"pm.environment.set(\"paymentId\", response.PaymentId);"
 								],
 								"type": "text/javascript"
 							}
@@ -3051,7 +3070,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"amount\": 25.99,\n  \"paymentDate\": \"{{$isoTimestamp}}\",\n  \"paymentMethod\": \"Credit Card\"\n}",
+							"raw": "{\n  \"Amount\": 25.99,\n  \"PaymentDate\": \"{{$isoTimestamp}}\",\n  \"PaymentMethod\": \"Credit Card\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3094,7 +3113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"amount\": 25.99,\n  \"paymentDate\": \"{{$isoTimestamp}}\",\n  \"paymentMethod\": \"Credit Card\"\n}",
+							"raw": "{\n  \"Amount\": 25.99,\n  \"PaymentDate\": \"{{$isoTimestamp}}\",\n  \"PaymentMethod\": \"Credit Card\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3143,7 +3162,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"amount\": -5.00,\n  \"paymentDate\": \"invalid-date\",\n  \"paymentMethod\": \"\"\n}",
+							"raw": "{\n  \"Amount\": -5.00,\n  \"PaymentDate\": \"invalid-date\",\n  \"PaymentMethod\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3182,18 +3201,20 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has payment properties\", function () {",
-									"    pm.expect(response).to.have.property('paymentId');",
-									"    pm.expect(response).to.have.property('orderId');",
-									"    pm.expect(response).to.have.property('amount');",
-									"    pm.expect(response).to.have.property('paymentDate');",
-									"    pm.expect(response).to.have.property('paymentMethod');",
+									"    pm.expect(response).to.have.property('PaymentId');",
+									"    pm.expect(response).to.have.property('OrderId');",
+									"    pm.expect(response).to.have.property('Amount');",
+									"    pm.expect(response).to.have.property('PaymentDate');",
+									"    pm.expect(response).to.have.property('PaymentMethod');",
+									"    pm.expect(response).to.have.property('CreatedDate');",
+									"    pm.expect(response).to.have.property('UpdatedDate');",
 									"});",
 									"",
 									"// Test actual data values",
 									"pm.test(\"Payment updated with correct values\", function () {",
 									"    const requestBody = JSON.parse(pm.request.body.raw);",
-									"    pm.expect(response.amount).to.eql(requestBody.amount);",
-									"    pm.expect(response.paymentMethod).to.eql(requestBody.paymentMethod);",
+									"    pm.expect(response.Amount).to.eql(requestBody.Amount);",
+									"    pm.expect(response.PaymentMethod).to.eql(requestBody.PaymentMethod);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3211,7 +3232,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"paymentId\": {{paymentId}},\n  \"amount\": 35.99,\n  \"paymentDate\": \"{{$isoTimestamp}}\",\n  \"paymentMethod\": \"PayPal\"\n}",
+							"raw": "{\n  \"PaymentId\": {{paymentId}},\n  \"Amount\": 35.99,\n  \"PaymentDate\": \"{{$isoTimestamp}}\",\n  \"PaymentMethod\": \"PayPal\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3261,7 +3282,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"paymentId\": 999999,\n  \"amount\": 35.99,\n  \"paymentDate\": \"{{$isoTimestamp}}\",\n  \"paymentMethod\": \"PayPal\"\n}",
+							"raw": "{\n  \"PaymentId\": 999999,\n  \"Amount\": 35.99,\n  \"PaymentDate\": \"{{$isoTimestamp}}\",\n  \"PaymentMethod\": \"PayPal\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3391,19 +3412,19 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test empty results",
 									"pm.test(\"Empty results handled correctly\", function () {",
 									"    // Even with no results, structure should be valid",
-									"    pm.expect(response.items).to.be.an('array');",
-									"    pm.expect(response.totalCount).to.eql(0);",
-									"    pm.expect(response.totalPages).to.eql(0);",
+									"    pm.expect(response.Items).to.be.an('array');",
+									"    pm.expect(response.TotalCount).to.eql(0);",
+									"    pm.expect(response.TotalPages).to.eql(0);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3457,18 +3478,18 @@
 									"",
 									"// Test response structure",
 									"pm.test(\"Response has paged structure\", function () {",
-									"    pm.expect(response).to.have.property('items');",
-									"    pm.expect(response).to.have.property('page');",
-									"    pm.expect(response).to.have.property('pageSize');",
-									"    pm.expect(response).to.have.property('totalCount');",
-									"    pm.expect(response).to.have.property('totalPages');",
+									"    pm.expect(response).to.have.property('Items');",
+									"    pm.expect(response).to.have.property('Page');",
+									"    pm.expect(response).to.have.property('PageSize');",
+									"    pm.expect(response).to.have.property('TotalCount');",
+									"    pm.expect(response).to.have.property('TotalPages');",
 									"});",
 									"",
 									"// Test out of bound page handling",
 									"pm.test(\"Out of bound page handled correctly\", function () {",
 									"    // Should return empty items array but maintain structure",
-									"    pm.expect(response.items).to.be.an('array');",
-									"    pm.expect(response.items.length).to.eql(0);",
+									"    pm.expect(response.Items).to.be.an('array');",
+									"    pm.expect(response.Items.length).to.eql(0);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3574,7 +3595,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"\",\n  \"description\": \"Product with invalid data\",\n  \"price\": -5.00,\n  \"isActive\": true,\n  \"categoryId\": 0\n}",
+							"raw": "{\n  \"Name\": \"\",\n  \"Description\": \"Product with invalid data\",\n  \"Price\": -5.00,\n  \"IsActive\": true,\n  \"CategoryId\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"

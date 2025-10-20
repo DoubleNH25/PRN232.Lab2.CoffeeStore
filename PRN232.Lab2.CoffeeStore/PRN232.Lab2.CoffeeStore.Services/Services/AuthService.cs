@@ -159,7 +159,7 @@ public class AuthService : IAuthService
 
     private async Task<AuthResponseModel> GenerateTokenResponseAsync(ApplicationUser user)
     {
-        var accessToken = GenerateJwtToken(user);
+        var accessToken = await GenerateJwtTokenAsync(user);
         var refreshToken = await CreateRefreshTokenAsync(user);
 
         return new AuthResponseModel
@@ -172,7 +172,7 @@ public class AuthService : IAuthService
         };
     }
 
-    private (string Token, DateTime Expiration) GenerateJwtToken(ApplicationUser user)
+    private async Task<(string Token, DateTime Expiration)> GenerateJwtTokenAsync(ApplicationUser user)
     {
         var claims = new List<Claim>
         {
@@ -181,6 +181,13 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Name, user.FullName)
         };
+
+        // Add role claims to the token
+        var userRoles = await _userManager.GetRolesAsync(user);
+        foreach (var role in userRoles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SigningKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
