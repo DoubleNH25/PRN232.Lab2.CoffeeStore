@@ -1,0 +1,25 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: coffeestore-db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=12345Password!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  web:
+    build: .
+    container_name: coffeestore-api
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Container
+      - ConnectionStrings__CoffeeStore=Server=db;Database=CoffeeStoreDb;User Id=sa;Password=12345Password!;TrustServerCertificate=True;
+    depends_on:
+      - db
+
+volumes:
+  sqlserver_data:

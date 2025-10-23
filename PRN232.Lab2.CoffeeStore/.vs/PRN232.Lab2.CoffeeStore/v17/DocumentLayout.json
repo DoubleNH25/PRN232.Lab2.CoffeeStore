@@ -1,7 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Admin\\Documents\\GitHub\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE7393E-8496-452A-982C-134002D297E2}|PRN232.Lab2.CoffeeStore.API\\PRN232.Lab2.CoffeeStore.API.csproj|c:\\users\\admin\\documents\\github\\prn232.lab2.coffeestore\\prn232.lab2.coffeestore\\prn232.lab2.coffeestore.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE7393E-8496-452A-982C-134002D297E2}|PRN232.Lab2.CoffeeStore.API\\PRN232.Lab2.CoffeeStore.API.csproj|solutionrelative:prn232.lab2.coffeestore.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 22,
           "Children": [
             {
               "$type": "Bookmark",
@@ -98,6 +103,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Documents\\GitHub\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore.API\\Program.cs",
+              "RelativeDocumentMoniker": "PRN232.Lab2.CoffeeStore.API\\Program.cs",
+              "ToolTip": "C:\\Users\\Admin\\Documents\\GitHub\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore\\PRN232.Lab2.CoffeeStore.API\\Program.cs",
+              "RelativeToolTip": "PRN232.Lab2.CoffeeStore.API\\Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T03:08:41.857Z",
+              "EditorCaption": ""
             }
           ]
         }
